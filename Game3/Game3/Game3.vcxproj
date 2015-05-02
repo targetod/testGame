@@ -5,9 +5,17 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -19,7 +27,17 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Makefile</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
@@ -30,12 +48,30 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <NMakeIncludeSearchPath>e:\PROGRAMMs\SFML-2.2-windows-gcc-4.9.2-mingw-64-bit\SFML-2.2\include;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v3-rev1\mingw64\lib\gcc\x86_64-w64-mingw32\4.9.2\include;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v3-rev1\mingw64\lib\gcc\x86_64-w64-mingw32\4.9.2\include-fixed;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v3-rev1\mingw64\x86_64-w64-mingw32\include;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v3-rev1\mingw64\x86_64-w64-mingw32\include\c++;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v3-rev1\mingw64\x86_64-w64-mingw32\include\c++\x86_64-w64-mingw32;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v3-rev1\mingw64\x86_64-w64-mingw32\include\c++\backward;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath>E:\PROGRAMMs\Cplusplus_lib\SFML-2.2-windows-gcc-4.9.2-mingw-64-bit\SFML-2.2\include;C:\TDM-GCC-64\lib\gcc\x86_64-w64-mingw32\4.9.2\include\c++;C:\TDM-GCC-64\lib\gcc\x86_64-w64-mingw32\4.9.2\include\c++\x86_64-w64-mingw32;C:\TDM-GCC-64\lib\gcc\x86_64-w64-mingw32\4.9.2\include\c++\backward;C:\TDM-GCC-64\lib\gcc\x86_64-w64-mingw32\4.9.2\include;C:\TDM-GCC-64\include;C:\TDM-GCC-64\lib\gcc\x86_64-w64-mingw32\4.9.2\include-fixed;C:\TDM-GCC-64\x86_64-w64-mingw32\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeForcedIncludes>$(ProjectDir)\gcc_Debug.h;$(VISUALGDB_DIR)\gcc_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
+    <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
+    <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /rebuild "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeReBuildCommandLine>
+    <NMakeOutput>$(ProjectDir)Game3-Debug.vgdbsettings</NMakeOutput>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <ReferencePath />
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <NMakePreprocessorDefinitions>__VisualGDB_CFG_Debug;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <NMakeIncludeSearchPath>E:\PROGRAMMs\Cplusplus_lib\SFML-2.2-windows-gcc-4.9.2-mingw-64-bit\SFML-2.2\include;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\lib\gcc\x86_64-w64-mingw32\4.9.2\include;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\lib\gcc\x86_64-w64-mingw32\4.9.2\include-fixed;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\x86_64-w64-mingw32\include;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\x86_64-w64-mingw32\include\c++;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\x86_64-w64-mingw32\include\c++\x86_64-w64-mingw32;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\x86_64-w64-mingw32\include\c++\backward;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
     <NMakeForcedIncludes>$(ProjectDir)\gcc_Debug.h;$(VISUALGDB_DIR)\gcc_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
     <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
     <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>
@@ -47,7 +83,19 @@
     <NMakePreprocessorDefinitions>__VisualGDB_CFG_Debug;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <NMakeIncludeSearchPath>e:\PROGRAMMs\SFML-2.2-windows-gcc-4.9.2-mingw-64-bit\SFML-2.2\include;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v3-rev1\mingw64\lib\gcc\x86_64-w64-mingw32\4.9.2\include;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v3-rev1\mingw64\lib\gcc\x86_64-w64-mingw32\4.9.2\include-fixed;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v3-rev1\mingw64\x86_64-w64-mingw32\include;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v3-rev1\mingw64\x86_64-w64-mingw32\include\c++;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v3-rev1\mingw64\x86_64-w64-mingw32\include\c++\x86_64-w64-mingw32;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v3-rev1\mingw64\x86_64-w64-mingw32\include\c++\backward;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath>E:\PROGRAMMs\Cplusplus_lib\SFML-2.2-windows-gcc-4.9.2-mingw-64-bit\SFML-2.2\include;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\lib\gcc\x86_64-w64-mingw32\4.9.2\include;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\lib\gcc\x86_64-w64-mingw32\4.9.2\include-fixed;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\x86_64-w64-mingw32\include;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\x86_64-w64-mingw32\include\c++;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\x86_64-w64-mingw32\include\c++\x86_64-w64-mingw32;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\x86_64-w64-mingw32\include\c++\backward;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeForcedIncludes>$(ProjectDir)\gcc_Release.h;$(VISUALGDB_DIR)\gcc_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
+    <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
+    <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /rebuild "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeReBuildCommandLine>
+    <NMakeOutput>$(ProjectDir)Game3-Release.vgdbsettings</NMakeOutput>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <ReferencePath />
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <NMakePreprocessorDefinitions>__VisualGDB_CFG_Release;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <NMakeIncludeSearchPath>E:\PROGRAMMs\Cplusplus_lib\SFML-2.2-windows-gcc-4.9.2-mingw-64-bit\SFML-2.2\include;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\lib\gcc\x86_64-w64-mingw32\4.9.2\include;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\lib\gcc\x86_64-w64-mingw32\4.9.2\include-fixed;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\x86_64-w64-mingw32\include;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\x86_64-w64-mingw32\include\c++;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\x86_64-w64-mingw32\include\c++\x86_64-w64-mingw32;C:\mingw-w64\x86_64-4.9.2-win32-seh-rt_v4-rev2\mingw64\x86_64-w64-mingw32\include\c++\backward;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
     <NMakeForcedIncludes>$(ProjectDir)\gcc_Release.h;$(VISUALGDB_DIR)\gcc_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
     <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
     <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)" "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>

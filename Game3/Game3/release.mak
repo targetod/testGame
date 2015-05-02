@@ -5,25 +5,25 @@
 BINARYDIR := Release
 
 #Toolchain
-CC := C:/mingw-w64/x86_64-4.9.2-win32-seh-rt_v3-rev1/mingw64/bin/gcc.exe
-CXX := C:/mingw-w64/x86_64-4.9.2-win32-seh-rt_v3-rev1/mingw64/bin/g++.exe
+CC := C:/mingw-w64/x86_64-4.9.2-win32-seh-rt_v4-rev2/mingw64/bin/gcc.exe
+CXX := C:/mingw-w64/x86_64-4.9.2-win32-seh-rt_v4-rev2/mingw64/bin/g++.exe
 LD := $(CXX)
-AR := C:/mingw-w64/x86_64-4.9.2-win32-seh-rt_v3-rev1/mingw64/bin/ar.exe
+AR := C:/mingw-w64/x86_64-4.9.2-win32-seh-rt_v4-rev2/mingw64/bin/ar.exe
 OBJCOPY := 
 
 #Additional flags
 PREPROCESSOR_MACROS := NDEBUG RELEASE
-INCLUDE_DIRS := e:\PROGRAMMs\SFML-2.2-windows-gcc-4.9.2-mingw-64-bit\SFML-2.2\include\\
-LIBRARY_DIRS := e:\PROGRAMMs\SFML-2.2-windows-gcc-4.9.2-mingw-64-bit\SFML-2.2\lib\\
+INCLUDE_DIRS := E:/PROGRAMMs/Cplusplus_lib/SFML-2.2-windows-gcc-4.9.2-mingw-64-bit/SFML-2.2/include
+LIBRARY_DIRS := E:/PROGRAMMs/Cplusplus_lib/SFML-2.2-windows-gcc-4.9.2-mingw-64-bit/SFML-2.2/lib
 LIBRARY_NAMES := sfml-graphics sfml-system sfml-window sfml-main
 ADDITIONAL_LINKER_INPUTS := 
 MACOS_FRAMEWORKS := 
 LINUX_PACKAGES := 
 
-CFLAGS := -ggdb -ffunction-sections -O3
-CXXFLAGS := -ggdb -ffunction-sections -O3
+CFLAGS := -ggdb -ffunction-sections -O3 -std=c++11
+CXXFLAGS := -ggdb -ffunction-sections -O3 -std=c++11
 ASFLAGS := 
-LDFLAGS := -Wl,-gc-sections
+LDFLAGS := -Wl,-gc-sections, -mwindows
 COMMONFLAGS := 
 
 START_GROUP := -Wl,--start-group

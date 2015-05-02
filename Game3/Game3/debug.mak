@@ -5,16 +5,16 @@
 BINARYDIR := Debug
 
 #Toolchain
-CC := C:/mingw-w64/x86_64-4.9.2-win32-seh-rt_v3-rev1/mingw64/bin/gcc.exe
-CXX := C:/mingw-w64/x86_64-4.9.2-win32-seh-rt_v3-rev1/mingw64/bin/g++.exe
+CC := C:/mingw-w64/x86_64-4.9.2-win32-seh-rt_v4-rev2/mingw64/bin/gcc.exe
+CXX := C:/mingw-w64/x86_64-4.9.2-win32-seh-rt_v4-rev2/mingw64/bin/g++.exe
 LD := $(CXX)
-AR := C:/mingw-w64/x86_64-4.9.2-win32-seh-rt_v3-rev1/mingw64/bin/ar.exe
+AR := C:/mingw-w64/x86_64-4.9.2-win32-seh-rt_v4-rev2/mingw64/bin/ar.exe
 OBJCOPY := 
 
 #Additional flags
 PREPROCESSOR_MACROS := DEBUG
-INCLUDE_DIRS := e:\PROGRAMMs\SFML-2.2-windows-gcc-4.9.2-mingw-64-bit\SFML-2.2\include\\
-LIBRARY_DIRS := e:\PROGRAMMs\SFML-2.2-windows-gcc-4.9.2-mingw-64-bit\SFML-2.2\lib\\
+INCLUDE_DIRS := E:/PROGRAMMs/Cplusplus_lib/SFML-2.2-windows-gcc-4.9.2-mingw-64-bit/SFML-2.2/include
+LIBRARY_DIRS := E:/PROGRAMMs/Cplusplus_lib/SFML-2.2-windows-gcc-4.9.2-mingw-64-bit/SFML-2.2/lib
 LIBRARY_NAMES := sfml-graphics-d sfml-window-d sfml-system-d sfml-main-d
 ADDITIONAL_LINKER_INPUTS := 
 MACOS_FRAMEWORKS := 
