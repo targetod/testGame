@@ -10,7 +10,7 @@ class Ball
 public:
 	static const sf::Color defColor;
 	static constexpr float defRadius{ 10.f };
-	static constexpr float defVelocity{ 1.f };
+	static constexpr float defVelocity{ 4.f };
 
 	sf::CircleShape shape;
 
@@ -113,16 +113,119 @@ private:
 	}
 
 };
+
+class Brick
+{
+public:
+	static const sf::Color defColor;
+	static constexpr float defWidth{60.f};
+	static constexpr float defHeight{20.f};
+	static constexpr float defVelocity{8.f};
+	
+	sf::RectangleShape shape;
+	
+	bool destroyed{false};
+	
+	Brick(float mX, float mY)
+	{
+		shape.setPosition(mX, mY);
+		shape.setSize({ defWidth, defHeight });
+		shape.setFillColor(defColor);
+		shape.setOrigin(defWidth / 2.f, defHeight / 2.f);
+	}
+	
+	void update()
+	{
+	}
+	void draw(sf::RenderWindow& mTarget){
+		mTarget.draw(shape);
+	}
+	
+	float x() const noexcept { return shape.getPosition().x; }
+	float y() const noexcept { return shape.getPosition().y; }
+	float width() const noexcept { return shape.getSize().x; }
+	float height() const noexcept { return shape.getSize().y; }
+	float left() const noexcept{ return x() - width() / 2.f; }
+	float right() const noexcept{ return x() + width() / 2.f; }
+	float top() const noexcept{ return y() - height() / 2.f; }
+	float bottom() const noexcept{ return y() + height() / 2.f; }
+};
 const sf::Color Ball::defColor{ sf::Color::Red };
 const sf::Color Paddle::defColor{ sf::Color::Red };
+const sf::Color Brick::defColor {sf::Color::Yellow};
 
+
+// peresechenie 2x ob*ektov
+template <typename T1, typename T2>
+bool isIntersecting(const T1& lft, const T2& rgt) noexcept
+{
+	return lft.right() >= rgt.left()
+		&& lft.left() <= rgt.right()
+		&& lft.bottom() >= rgt.top()
+		&& lft.top() <= rgt.bottom();
+}
+
+void solvePaddleBallCollision(const Paddle& mPaddle, Ball& mBall) noexcept
+{
+	if (!isIntersecting(mPaddle, mBall)) return;
+	
+	mBall.velocity.y = -Ball::defVelocity;
+	
+// Direction ball
+	mBall.velocity.x = mBall.x() < mPaddle.x() ?
+		-Ball::defVelocity : Ball::defVelocity;
+}
+
+void solveBrickBallCollision(Brick& mBrick, Ball& mBall) noexcept
+{
+	if (!isIntersecting(mBrick, mBall)) return;
+	
+	mBrick.destroyed = true;
+	
+	float overlapLeft{ mBall.right() - mBrick.left() };
+	float overlapRight{ mBrick.right() - mBall.left() };
+	float overlapTop{ mBall.bottom() - mBrick.top() };
+	float overlapBottom{ mBrick.bottom() - mBall.top() };
+	
+	bool ballFromLeft(std::abs(overlapLeft) < std::abs(overlapRight));
+	bool ballFromTop(std::abs(overlapTop) < std::abs(overlapBottom));
+
+	float minOverlapX{ ballFromLeft ? overlapLeft :  overlapRight};
+	float minOverlapY{ ballFromTop ? overlapTop :  overlapBottom};
+	
+	if (std::abs(minOverlapX) < std::abs(minOverlapY))
+	{
+		mBall.velocity.x = ballFromLeft ? -Ball::defVelocity : Ball::defVelocity;
+	}
+	else{
+		mBall.velocity.y = ballFromTop ? -Ball::defVelocity : Ball::defVelocity;
+	}
+		
+}
 
 int main(int argc, char *argv[])
 {
 	Ball ball{ wndWidth / 2., wndHeight / 2.f };
-
 	Paddle paddle{ wndWidth / 2, wndHeight - 50 };
 
+	std::vector<Brick> bricks;
+	
+	constexpr int brkCountX{11};
+	constexpr int brkCountY{5};
+	constexpr int brkStartColumn{1};
+	constexpr int brkStartRow{2};
+	constexpr float brkSpacing{3.f};
+	constexpr float brkOffsetX{22.f};
+	
+	for (int iX{ 0 }; iX < brkCountX; ++iX)
+		for (int iY{ 0 }; iY < brkCountY; ++iY)
+		{
+			float x{ (iX + brkStartColumn) * (Brick::defWidth + brkSpacing)};
+			float y{ (iY + brkStartRow) * (Brick::defHeight + brkSpacing)};
+			
+			bricks.emplace_back(brkOffsetX + x, y);
+		}
+	
 	sf::RenderWindow window{ { wndWidth, wndHeight }, "Arkanoid - 2" };
 	window.setFramerateLimit(60);
 
@@ -135,8 +238,21 @@ int main(int argc, char *argv[])
 		ball.update();
 		paddle.update();
 
+		for (auto& brick : bricks)
+		{
+			brick.update();
+			solveBrickBallCollision(brick, ball);
+		}
+		bricks.erase(std::remove_if(std::begin(bricks), std::end(bricks),
+				[](const auto& mBrick) { return mBrick.destroyed; }),
+			std::end(bricks)); 	
+		
+		solvePaddleBallCollision(paddle, ball);
+		
 		ball.draw(window);
 		paddle.draw(window);
+		for (auto& brick : bricks)
+			brick.draw(window);
 		
 		window.display();
 	}

@@ -256,7 +256,7 @@
 #endif
 //VS2005-2012 treats all files as C++, while VS2013+ can treat C files correctly.
 #if defined(_MSC_VER) && (_MSC_VER < 1800 || defined(__cplusplus))
-#define __cplusplus 201103L
+#define __cplusplus 201300L
 #endif
 #ifndef __DEC128_MAX__
 #define __DEC128_MAX__ 9.999999999999999999999999999999999E6144DL
@@ -369,6 +369,9 @@
 #ifndef __cpp_unicode_characters
 #define __cpp_unicode_characters 200704
 #endif
+#ifndef __cpp_decltype_auto
+#define __cpp_decltype_auto 201304
+#endif
 #ifndef __GCC_ATOMIC_INT_LOCK_FREE
 #define __GCC_ATOMIC_INT_LOCK_FREE 2
 #endif
@@ -404,6 +407,9 @@
 #endif
 #ifndef __INT8_TYPE__
 #define __INT8_TYPE__ signed char
+#endif
+#ifndef __cpp_digit_separators
+#define __cpp_digit_separators 201309
 #endif
 #ifndef __FLT_RADIX__
 #define __FLT_RADIX__ 2
@@ -465,6 +471,9 @@
 #ifndef __UINT_FAST16_TYPE__
 #define __UINT_FAST16_TYPE__ short unsigned int
 #endif
+#ifndef __cpp_attribute_deprecated
+#define __cpp_attribute_deprecated 201309
+#endif
 #ifndef __DEC64_MAX__
 #define __DEC64_MAX__ 9.999999999999999E384DD
 #endif
@@ -524,6 +533,9 @@
 #endif
 #ifndef __SIG_ATOMIC_MIN__
 #define __SIG_ATOMIC_MIN__ (-__SIG_ATOMIC_MAX__ - 1)
+#endif
+#ifndef __cpp_return_type_deduction
+#define __cpp_return_type_deduction 201304
 #endif
 #ifndef __INTPTR_TYPE__
 #define __INTPTR_TYPE__ long long int
@@ -657,6 +669,9 @@
 #ifndef __MINGW64__
 #define __MINGW64__ 1
 #endif
+#ifndef __cpp_runtime_arrays
+#define __cpp_runtime_arrays 201304
+#endif
 #ifndef __INTMAX_MAX__
 #define __INTMAX_MAX__ 9223372036854775807LL
 #endif
@@ -723,6 +738,9 @@
 #ifndef __LDBL_DENORM_MIN__
 #define __LDBL_DENORM_MIN__ 3.64519953188247460253e-4951L
 #endif
+#ifndef __cpp_generic_lambdas
+#define __cpp_generic_lambdas 201304
+#endif
 #ifndef __STDC__
 #define __STDC__ 1
 #endif
@@ -782,6 +800,9 @@
 #endif
 #ifndef __WIN64__
 #define __WIN64__ 1
+#endif
+#ifndef __cpp_init_captures
+#define __cpp_init_captures 201304
 #endif
 #ifndef __ATOMIC_ACQ_REL
 #define __ATOMIC_ACQ_REL 4
