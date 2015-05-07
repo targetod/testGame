@@ -202,56 +202,118 @@ void solveBrickBallCollision(Brick& mBrick, Ball& mBall) noexcept
 		
 }
 
-int main(int argc, char *argv[])
+
+class Game
 {
-	constexpr int brkCountX{11}, brkCountY{5};
-	constexpr int brkStartColumn{1}, brkStartRow{2};
-	constexpr float brkSpacing{3.f}, brkOffsetX{22.f};
+private:
+	enum class State {Paused, InProgress};
+	
+	static constexpr int brkCountX{11}, brkCountY{5};
+	static constexpr int brkStartColumn{1}, brkStartRow{2};
+	static constexpr float brkSpacing{3.f}, brkOffsetX{22.f};
+	
+	sf::RenderWindow window{ { wndWidth, wndHeight }, "Arkanoid - 9" };
 	
 	Ball ball{ wndWidth / 2., wndHeight / 2.f };
 	Paddle paddle{ wndWidth / 2, wndHeight - 50 };
 	std::vector<Brick> bricks;
 	
-	for (int iX{ 0 }; iX < brkCountX; ++iX)
-		for (int iY{ 0 }; iY < brkCountY; ++iY)
-		{
-			float x{ (iX + brkStartColumn) * (Brick::defWidth + brkSpacing)};
-			float y{ (iY + brkStartRow) * (Brick::defHeight + brkSpacing)};
-			
-			bricks.emplace_back(brkOffsetX + x, y);
-		}
+	State state{State::InProgress};
+	bool pausePressedLastFrame{false};
 	
-	sf::RenderWindow window{ { wndWidth, wndHeight }, "Arkanoid - 2" };
-	window.setFramerateLimit(60);
-
-	while (true)
+public:
+	Game(){
+		window.setFramerateLimit(60);
+	}
+	// vosobnovlenie
+	void restart()
 	{
-		window.clear(sf::Color::Black);
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
-			break;
+		state = State::Paused;
 		
-		ball.update();
-		paddle.update();
-
-		for (auto& brick : bricks)
-		{
-			brick.update();
-			solveBrickBallCollision(brick, ball);
-		}
-		bricks.erase(std::remove_if(std::begin(bricks), std::end(bricks),
-				[](const auto& mBrick) { return mBrick.destroyed; }),
-			std::end(bricks)); 	
+		for (int iX{ 0 }; iX < brkCountX; ++iX)
+			for (int iY{ 0 }; iY < brkCountY; ++iY)
+			{
+				float x{ (iX + brkStartColumn) * (Brick::defWidth + brkSpacing)}
+				;
+				float y{ (iY + brkStartRow) * (Brick::defHeight + brkSpacing)}
+				;
+			
+				bricks.emplace_back(brkOffsetX + x, y);
+			}
 		
-		solvePaddleBallCollision(paddle, ball);
-		
-		ball.draw(window);
-		paddle.draw(window);
-		for (auto& brick : bricks)
-			brick.draw(window);
-		
-		window.display();
+		Ball ball{ wndWidth / 2., wndHeight / 2.f };
+		Paddle paddle{ wndWidth / 2, wndHeight - 50 };
 	}
 	
+	void run()
+	{
+		while (true)
+		{
+			window.clear(sf::Color::Black);
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
+				break;
+			
+			// P key нажата
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P))
+			{
+				// если в предидущем цикле не нажата, нажимаем
+				if (!pausePressedLastFrame)
+				{
+					if (state == State::Paused)
+						state = State::InProgress;
+					else if (state == State::InProgress)
+						state = State::Paused;
+				}	
+				pausePressedLastFrame = true;
+			}
+			else{
+				pausePressedLastFrame = false;
+			}
+			
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R)){
+				restart();
+			}
+			// If the game is paused, we'll only draw game elements,
+            // without updating them.
+			if (state != State::Paused)
+			{
+				// The rest of the game loop code is exactly the same.
+				ball.update();
+				paddle.update();
+
+				for (auto& brick : bricks)
+				{
+					brick.update();
+					solveBrickBallCollision(brick, ball);
+				}
+				
+				bricks.erase(
+					std::remove_if(std::begin(bricks),std::end(bricks),
+					[](const auto& mBrick) { return mBrick.destroyed; }),
+					std::end(bricks)
+				); 	
+		
+				solvePaddleBallCollision(paddle, ball);
+			}
+			
+			ball.draw(window);
+			paddle.draw(window);
+			for (auto& brick : bricks)
+				brick.draw(window);
+		
+			window.display();
+		}
+	}
+	
+};
+
+
+int main(int argc, char *argv[])
+{
+	Game game;
+	
+	game.restart();
+	game.run();
 	
 	return 0;
 }
