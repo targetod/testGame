@@ -234,7 +234,7 @@ int main(int argc, char *argv[])
 		window.clear(sf::Color::Black);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 			break;
-
+		
 		ball.update();
 		paddle.update();
 
