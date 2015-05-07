@@ -5,14 +5,42 @@ using namespace std;
 
 constexpr unsigned int wndWidth{ 800 }, wndHeight{ 600 };
 
-class Ball
+
+struct Rectangle
+{
+	sf::RectangleShape shape;
+	
+	float x() const noexcept{ return shape.getPosition().x; }
+	float y() const noexcept{ return shape.getPosition().y; }
+	float width() const noexcept{ return shape.getSize().x; }
+	float height() const noexcept{ return shape.getSize().y; }
+	float left() const noexcept{ return x() - width() / 2.f; }
+	float right() const noexcept{ return x() + width() / 2.f; }
+	float top() const noexcept{ return y() - height() / 2.f; }
+	float bottom() const noexcept{ return y() + height() / 2.f; }
+};
+
+struct Circle
+{
+	sf::CircleShape shape;
+	
+	float x() const noexcept{ return shape.getPosition().x; }
+	float y() const noexcept{ return shape.getPosition().y; }
+	float radius() const noexcept { return shape.getRadius();}
+	float left() const noexcept  { return x() - radius(); }
+	float right() const noexcept { return x() + radius(); }
+	float top() const noexcept   { return y() - radius(); }
+	float bottom() const noexcept{ return y() + radius(); }
+
+};
+
+
+class Ball : public Circle
 {
 public:
 	static const sf::Color defColor;
 	static constexpr float defRadius{ 10.f };
 	static constexpr float defVelocity{ 4.f };
-
-	sf::CircleShape shape;
 
 	sf::Vector2f velocity{ -defVelocity, -defVelocity };
 
@@ -23,16 +51,7 @@ public:
 		shape.setFillColor(defColor);
 		shape.setOrigin(defRadius, defRadius);
 	}
-	//bound
-	float x() const noexcept{ return shape.getPosition().x; }
-	float y() const noexcept{ return shape.getPosition().y; }
-	float left() const noexcept{ return x() - shape.getRadius(); }
-	float right() const noexcept{ return x() + shape.getRadius(); }
-	float top() const noexcept{ return y() - shape.getRadius(); }
-	float bottom() const noexcept{ return y() + shape.getRadius(); }
-
-
-
+	
 	void update(){
 		shape.move(velocity);
 		solveBoundCollisions();
@@ -43,7 +62,7 @@ public:
 	}
 
 private:
-	void solveBoundCollisions(){
+	void solveBoundCollisions() noexcept{
 		if (left() < 0)
 			velocity.x = defVelocity;
 		else if (right() > wndWidth)
@@ -57,7 +76,7 @@ private:
 };
 
 
-class Paddle
+class Paddle : public Rectangle
 {
 public:
 	static const sf::Color defColor;
@@ -65,7 +84,6 @@ public:
 	static constexpr float defHeight{ 20.f };
 	static constexpr float defVelocity{ 8.f };
 
-	sf::RectangleShape shape;
 	sf::Vector2f velocity;
 
 	Paddle(float mX, float mY)
@@ -84,15 +102,6 @@ public:
 	void draw(sf::RenderWindow& mTarget){
 		mTarget.draw(shape);
 	}
-
-	float x() const noexcept{ return shape.getPosition().x; }
-	float y() const noexcept{ return shape.getPosition().y; }
-	float width() const noexcept{ return shape.getSize().x; }
-	float height() const noexcept{ return shape.getSize().y; }
-	float left() const noexcept{ return x() - width() / 2.f; }
-	float right() const noexcept{ return x() + width() / 2.f; }
-	float top() const noexcept{ return y() - height() / 2.f; }
-	float bottom() const noexcept{ return y() + height() / 2.f; }
 
 private:
 	void processPlayerInput()
@@ -114,15 +123,13 @@ private:
 
 };
 
-class Brick
+class Brick : public Rectangle
 {
 public:
 	static const sf::Color defColor;
 	static constexpr float defWidth{60.f};
 	static constexpr float defHeight{20.f};
 	static constexpr float defVelocity{8.f};
-	
-	sf::RectangleShape shape;
 	
 	bool destroyed{false};
 	
@@ -141,18 +148,10 @@ public:
 		mTarget.draw(shape);
 	}
 	
-	float x() const noexcept { return shape.getPosition().x; }
-	float y() const noexcept { return shape.getPosition().y; }
-	float width() const noexcept { return shape.getSize().x; }
-	float height() const noexcept { return shape.getSize().y; }
-	float left() const noexcept{ return x() - width() / 2.f; }
-	float right() const noexcept{ return x() + width() / 2.f; }
-	float top() const noexcept{ return y() - height() / 2.f; }
-	float bottom() const noexcept{ return y() + height() / 2.f; }
 };
-const sf::Color Ball::defColor{ sf::Color::Red };
-const sf::Color Paddle::defColor{ sf::Color::Red };
-const sf::Color Brick::defColor {sf::Color::Yellow};
+const sf::Color Ball::defColor   { sf::Color::Red };
+const sf::Color Paddle::defColor { sf::Color::Red };
+const sf::Color Brick::defColor  { sf::Color::Yellow};
 
 
 // peresechenie 2x ob*ektov
@@ -205,17 +204,13 @@ void solveBrickBallCollision(Brick& mBrick, Ball& mBall) noexcept
 
 int main(int argc, char *argv[])
 {
+	constexpr int brkCountX{11}, brkCountY{5};
+	constexpr int brkStartColumn{1}, brkStartRow{2};
+	constexpr float brkSpacing{3.f}, brkOffsetX{22.f};
+	
 	Ball ball{ wndWidth / 2., wndHeight / 2.f };
 	Paddle paddle{ wndWidth / 2, wndHeight - 50 };
-
 	std::vector<Brick> bricks;
-	
-	constexpr int brkCountX{11};
-	constexpr int brkCountY{5};
-	constexpr int brkStartColumn{1};
-	constexpr int brkStartRow{2};
-	constexpr float brkSpacing{3.f};
-	constexpr float brkOffsetX{22.f};
 	
 	for (int iX{ 0 }; iX < brkCountX; ++iX)
 		for (int iY{ 0 }; iY < brkCountY; ++iY)
